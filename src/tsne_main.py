@@ -22,17 +22,10 @@ Created on Dec 22, 2016
 # and runs faster since the underlying C code is compiled by the user
 # ---------------
 
-
-
-
-
-
-
 '''
 
 
-
-class TSNE(self):
+class TSNE:
     """t-distributed Stochastic Neighbor Embedding.
 
     t-SNE [1] is a tool to visualize high-dimensional data. It converts
@@ -174,6 +167,23 @@ class TSNE(self):
         self.angle = angle
         self.embedding_ = None
         
+    def _fit(self, X):
+        # Calls bhtsne C++ code
+        print("Do stuff here !")
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        return 0
+        
+    def fit(self,X):
+        return self._fit(X)    
+        
     
-   
     
