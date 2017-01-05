@@ -22,7 +22,9 @@ $python tsne -h
 
 # Requirements:
 - Python3.x
-- ffmpeg software  
+- ffmpeg software 
+- C++ library
+ - ublas (for exact t-SNE)
 - Python packages:
   - sklearn
   - pandas
