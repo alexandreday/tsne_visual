@@ -22,8 +22,8 @@ $python tsne -h
 
 # Requirements:
 - Python3.x
-- ffmpeg software  
-- Python packages:
+- ffmpeg software (optional - for producing animations)
+- Fairly common python packages:
   - sklearn
   - pandas
 
