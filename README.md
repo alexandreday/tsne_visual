@@ -23,8 +23,6 @@ $python tsne -h
 # Requirements:
 - Python3.x
 - ffmpeg software (optional - for producing animations)
-- C++ library
- - ublas (for exact t-SNE)
 - Fairly common python packages:
   - sklearn
   - pandas
