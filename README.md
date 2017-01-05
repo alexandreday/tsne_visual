@@ -25,7 +25,7 @@ $python tsne -h
 - ffmpeg software (optional - for producing animations)
 - C++ library
  - ublas (for exact t-SNE)
-- Python packages:
+- Fairly common python packages:
   - sklearn
   - pandas
 
