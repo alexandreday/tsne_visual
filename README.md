@@ -23,3 +23,6 @@ $python tsne -h
 # Requirements:
 - Python3.x
 - ffmpeg software  
+ - Packages:
+  - sklearn
+  - pandas
