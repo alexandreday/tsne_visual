@@ -30,6 +30,6 @@ $python tsne -h
 # Why this wrapper ?
 During the course of a research project I ended up using t-SNE quite a bit for large datasets (N>20000). I wanted something 
 easy to use (i.e. in written in python !) but also very fast (i.e. with C/C++ speed). I also wanted to produce animations 
-of the t-SNE. To achieve all this I ended combining codes from multiple sources and writing a bit of code myself.
-
+of the t-SNE. To achieve all this I ended combining codes from multiple sources and writing a bit of code myself. I thought this
+might be useful for other people too so this is why I uploaded the code as a github repo.
 
