@@ -6,8 +6,6 @@ Created on Dec 23, 2016
 
 import numpy as np
 import pickle
-from matplotlib import pyplot as plt
-import seaborn as sns
 import pandas as pd
 
 '''
@@ -17,9 +15,9 @@ Created on Dec 22, 2016
 
 Purpose:
     This is a python wrapper for performing t-SNE embeddings.
-    It defines a tSNE class which mimics the form of sklearn with similar methods 
+    It defines a tSNE class which mimics the syntax of sklearn package with similar methods 
     It adds new methods to produce animations of the t-SNE embedding
-    and runs faster since the underlying C code is compiled by the user
+    and runs faster since the underlying C code is compiled by the user 
 '''
 
 class TSNE:
@@ -150,7 +148,7 @@ class TSNE:
                  n_iter_without_progress=30, min_grad_norm=1e-7,#metric="euclidean", 
                  init="random", PCA_n_components=None,verbose=0,
                  random_state=None, method='barnes_hut', angle=0.5,
-                 animate=False
+                 animate=False,file_name="auto"
                  ):
         if not (init in ["pca", "random"]):
             msg = "'init' must be 'pca', 'random'"
@@ -174,19 +172,37 @@ class TSNE:
         self.angle = angle
         self.embedding_ = None
         
-    def _fit(self, X):
-        # Calls bhtsne C++ code
-        print("Do stuff here !")
+        if file_name=="auto":
+            self.file_name="function_for_name_here.dat"
+        else:
+            self.file_name="data.dat"
         
+    def fit(self, X):
+        """
+        Purpose:
+            Fit X into the embedded space using the C++ executable
         
+        Parameter:
+            X : array, shape (n_samples, n_features)
+        """
         
-    
+        import os
+        parameters=[self.n_components,self.n_components,self.n_iter]
+        parameters=[str(p) for p in parameters]
         
+        os.system("./cpp/bh_tsne "+parameters.join(" "))
         
-        return 0
+        self.embedding_ = np.loadtxt("data.dat")
         
-    def fit(self,X):
-        return self._fit(X)    
+    def fit_transform(self,X):
+        """
+        Purpose:
+            Fit X into the embedded space using the C++ executable
         
-    
+        Parameter:
+            X : array, shape (n_samples, n_features)
+        """
+        self.fit(X)
+        
+        return self.embedding_
     
