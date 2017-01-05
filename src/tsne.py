@@ -192,7 +192,7 @@ class TSNE:
         
         os.system("./cpp/bh_tsne "+parameters.join(" "))
         
-        self.embedding_ = np.loadtxt("data.dat")
+        self.embedding_ = np.loadtxt(self.file_name)
         
     def fit_transform(self,X):
         """
