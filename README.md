@@ -1,7 +1,7 @@
 # tSNE_visual
-A Python3 wrapper for running, visualizing and producing animations of t-distributed stochastic nearest-neighbor embedding (t-SNE) implemented in C++.
-The code is a modified version of bhtsne taken from Laurens van der Maaten repository. The wrapper uses a similar syntax
-to sklearn, where tsne is defined as a class.
+A Python3 wrapper for running, visualizing and producing animations of t-distributed stochastic Nearest-Neighbor Embedding (t-SNE) implemented in C++.
+The code is a modified version of bhtsne taken from [Laurens van der Maaten repository](https://github.com/lvdmaaten/bhtsne). The wrapper uses a similar syntax
+to [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne), where t-SNE is defined as a class.
 
 # Compiling C++ code:
 Go to src/cpp and run:
