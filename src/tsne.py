@@ -136,22 +136,27 @@ class TSNE:
         used as a summary node of all points contained within it.
         This method is not very sensitive to changes in this parameter
         in the range of 0.2 - 0.8. Angle less than 0.2 has quickly increasing
-        computation time and angle greater 0.8 has quickly increasing error. 
+        computation time and angle greater 0.8 has quickly increasing error.
+        If angle < 1e-3, method='exact' will be used.
+        
+    animate : bool (default: False)
+        Produce a .mp4 clip of the t-SNE iterations. This is useful to gain intuition
+        about t-SNE and visualizing convergence (see http://distill.pub/2016/misread-tsne/ for a useful tutorial)  
     """ 
        
         
     def __init__(self, n_components=2, perplexity=30.0,
                  early_exaggeration=4.0, learning_rate=1000.0, n_iter=1000,
-                 n_iter_without_progress=30, min_grad_norm=1e-7,
-                 metric="euclidean", init="random", verbose=0,
-                 random_state=None, method='barnes_hut', angle=0.5):
-        #=======================================================================
-        # if not ((isinstance(init, string_types) and
-        #         init in ["pca", "random"]) or
-        #         isinstance(init, np.ndarray)):
-        #     msg = "'init' must be 'pca', 'random', or a numpy array"
-        #     raise ValueError(msg)
-        #=======================================================================
+                 n_iter_without_progress=30, min_grad_norm=1e-7,#metric="euclidean", 
+                 init="random", PCA_n_components=None,verbose=0,
+                 random_state=None, method='barnes_hut', angle=0.5,
+                 animate=False
+                 ):
+        if not (init in ["pca", "random"]):
+            msg = "'init' must be 'pca', 'random'"
+            raise ValueError(msg)
+        
+        
         self.n_components = n_components
         self.perplexity = perplexity
         self.early_exaggeration = early_exaggeration
@@ -159,8 +164,10 @@ class TSNE:
         self.n_iter = n_iter
         self.n_iter_without_progress = n_iter_without_progress
         self.min_grad_norm = min_grad_norm
-        self.metric = metric
+        
+        #self.metric = metric
         self.init = init
+        self.PCA_n_components=PCA_n_components
         self.verbose = verbose
         self.random_state = random_state
         self.method = method
@@ -173,11 +180,7 @@ class TSNE:
         
         
         
-        
-        
-        
-        
-        
+    
         
         
         return 0
