@@ -1,9 +1,25 @@
 # tSNE_visual
-Python/C++ simple tools for running and visualizing t-SNE to produce low dimensional embeddings
-The t-SNE is implemented in C++ and is a modified code taken from Laurens van der Maaten github reposity: https://github.com/lvdmaaten/bhtsne/
-A python wrapper is used to call the C++ executable and make it user friendly. 
-The python wrapper uses the sklearn (http://scikit-learn.org/stable/) syntax structure.
-The user can choose the t-SNE hyperparameters and also produce a movie of the iteration steps during the
-gradient descent. This requires the ffmpeg software.
- 
- 
+A Python3 wrapper for running,visualizing and producing animations of t-distributed stochastic nearest-neighbor embedding implemented in C++.
+The code is a modified version of bhtsne taken from Laurens van der Maaten repository. The wrapper uses a similar syntax
+to sklearn, where tsne is defined as a class.
+
+# Compiling C++:
+Go to /src/cpp and run:
+```
+g++ sptree.cpp tsne.cpp -o bh_tsne -O2
+```
+
+# Running from command line:
+From /src run:
+```
+$python tsne example.txt 40 4.0 1000 0.5 out_data_file.txt
+```
+
+For details on the meaning of those parameters, run:
+```
+$python tsne example.txt 40 4.0 1000 0.5 out_data_file.txt
+```
+
+# Requirements:
+- Python3.x
+- ffmpeg software  
