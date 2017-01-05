@@ -15,20 +15,17 @@ Created on Dec 22, 2016
 
 @author: Alexandre Day
 
-# ---------------
-# This is a python wrapper for performing t-SNE embeddings.
-# It defines a tSNE class which mimics the form of sklearn with similar methods 
-# It adds new methods to produce animations of the t-SNE embedding
-# and runs faster since the underlying C code is compiled by the user
-# ---------------
-
+Purpose:
+    This is a python wrapper for performing t-SNE embeddings.
+    It defines a tSNE class which mimics the form of sklearn with similar methods 
+    It adds new methods to produce animations of the t-SNE embedding
+    and runs faster since the underlying C code is compiled by the user
 '''
-
 
 class TSNE:
     """t-distributed Stochastic Neighbor Embedding.
 
-    t-SNE [1] is a tool to visualize high-dimensional data. It converts
+    t-SNE is a tool to visualize high-dimensional data. It converts
     similarities between data points to joint probabilities and tries
     to minimize the Kullback-Leibler divergence between the joint
     probabilities of the low-dimensional embedding and the
@@ -40,10 +37,13 @@ class TSNE:
     to reduce the number of dimensions to a reasonable amount (e.g. 50)
     if the number of features is very high. This will suppress some
     noise and speed up the computation of pairwise distances between
-    samples. For more tips see Laurens van der Maaten's FAQ [2].
-
-    Read more in the :ref:`User Guide <t_sne>`.
-
+    samples. For more tips see Laurens van der Maaten's FAQ.
+    
+    Ref.
+        [1] http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne
+        [2] https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding
+        [3] https://lvdmaaten.github.io/tsne/  
+    
     Parameters
     ----------
     n_components : int, optional (default: 2)

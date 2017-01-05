@@ -130,6 +130,13 @@ def init_bh_tsne(samples, workdir, no_dims=DEFAULT_NO_DIMS, initial_dims=INITIAL
     with open(path_join(workdir, 'data.dat'), 'wb') as data_file:
         # Write the bh_tsne header
         data_file.write(pack('iiddii', sample_count, sample_dim, theta, perplexity, no_dims, max_iter))
+        # --- Change this here, to add all parameters ----
+        # Read parameters in C-code
+        
+        # ~~~~~~~~~~ ------------ ~~~~~~~~~~~~~~~ ------------- ~~~~~~~~~~~~~~
+        # -------- ---------- ---------- ----------------------------------
+        # ~~~~ ----- ~~~~ -------~~~~~~~ 
+        
         # Then write the data
         for sample in samples:
             data_file.write(pack('{}d'.format(len(sample)), *sample))

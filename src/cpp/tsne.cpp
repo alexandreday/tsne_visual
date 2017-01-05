@@ -717,7 +717,7 @@ double TSNE::randn() {
 // Function that loads data from a t-SNE file
 // Note: this function does a malloc that should be freed elsewhere
 bool TSNE::load_data(double** data, int* n, int* d, int* max_iter, int* no_dims, double* theta, double* perplexity, double* early_exaggeration,int* rand_seed) {
-	// Open file, read first 2 integers, allocate memory, and read the data
+	// Open file, read first 2 integers, allocate memory, and read the data --- >
     FILE *h;
 	if((h = fopen("data.dat", "r+b")) == NULL) {
 		printf("Error: could not open data file.\n");
@@ -730,7 +730,7 @@ bool TSNE::load_data(double** data, int* n, int* d, int* max_iter, int* no_dims,
 	fread(perplexity, sizeof(double), 1, h);                            // perplexity
     fread(no_dims, sizeof(int), 1, h);                                  // N dims
     fread(max_iter, sizeof(int), 1, h);									// max number of iteration
-    fread(early_exaggeration, sizeof(double), 1, h);                    // perplexity
+    fread(early_exaggeration, sizeof(double), 1, h);                    // early exaggeration
     
     *data = (double*) malloc(*n * *d * sizeof(double));
                                                                             //*data = (double*) malloc(*d * *n * sizeof(double));
