@@ -2,23 +2,20 @@
 Created on Dec 23, 2016
 
 @author: Alexandre Day
-'''
 
-import numpy as np
-import pickle
-import pandas as pd
-
-'''
-Created on Dec 22, 2016
-
-@author: Alexandre Day
 
 Purpose:
     This is a python wrapper for performing t-SNE embeddings.
     It defines a tSNE class which mimics the syntax of sklearn package with similar methods 
     It adds new methods to produce animations of the t-SNE embedding
-    and runs faster since the underlying C code is compiled by the user 
+    and quite fast since the underlying code is written in C++. 
+    See README.md and license for authors of the C++ code. 
 '''
+
+import numpy as np
+import pickle
+import pandas as pd
+import utilities as ut
 
 class TSNE:
     """t-distributed Stochastic Neighbor Embedding.
@@ -140,6 +137,19 @@ class TSNE:
     animate : bool (default: False)
         Produce a .mp4 clip of the t-SNE iterations. This is useful to gain intuition
         about t-SNE and visualizing convergence (see http://distill.pub/2016/misread-tsne/ for a useful tutorial)  
+        
+    file_name: string (default 'auto')
+        Name of file where embedding to write the embedded data. If 'auto', will
+        automatically generate a file name (with parameters indicated in the file name)
+    
+    n_iter_lying: int (default 200)
+        Number of iteration that P-values are exaggerated. After 'n_iter_lying' iterations,
+        P-values are set to their real value
+        
+    n_iter_momentum_switch: int (default 200)
+        Number of iteration that momentum is set to 0.5 (updates are equally averaged)
+        After 'n_iter_momentum_switch' iterations, gradient descent updates are more reliable
+        and thus we increase momentum to 0.8
     """ 
        
         
@@ -148,12 +158,12 @@ class TSNE:
                  n_iter_without_progress=30, min_grad_norm=1e-7,#metric="euclidean", 
                  init="random", PCA_n_components=None,verbose=0,
                  random_state=None, method='barnes_hut', angle=0.5,
-                 animate=False,file_name="auto"
+                 animate=False,file_name="auto",
+                 n_iter_lying=200,n_iter_momentum_switch=200
                  ):
         if not (init in ["pca", "random"]):
             msg = "'init' must be 'pca', 'random'"
             raise ValueError(msg)
-        
         
         self.n_components = n_components
         self.perplexity = perplexity
@@ -162,12 +172,19 @@ class TSNE:
         self.n_iter = n_iter
         self.n_iter_without_progress = n_iter_without_progress
         self.min_grad_norm = min_grad_norm
+        self.n_iter_lying =n_iter_lying
+        self.n_iter_momentum_switch =n_iter_momentum_switch
         
         #self.metric = metric
         self.init = init
         self.PCA_n_components=PCA_n_components
         self.verbose = verbose
-        self.random_state = random_state
+        
+        if random_state is None:
+            self.random_state = np.random.randint(0,4294967295)
+        else:
+            self.random_state = random_state
+                        
         self.method = method
         self.angle = angle
         self.embedding_ = None
@@ -175,7 +192,7 @@ class TSNE:
         if file_name=="auto":
             self.file_name="function_for_name_here.dat"
         else:
-            self.file_name="data.dat"
+            self.file_name="result.dat"
         
     def fit(self, X):
         """
@@ -186,13 +203,22 @@ class TSNE:
             X : array, shape (n_samples, n_features)
         """
         
-        import os
-        parameters=[self.n_components,self.n_components,self.n_iter]
-        parameters=[str(p) for p in parameters]
+        ut.data_to_binary(X,delimiter="\t")
         
-        os.system("./cpp/bh_tsne "+parameters.join(" "))
+        parameters=[self.n_components,self.perplexity,
+                    self.early_exaggeration,self.learning_rate,
+                    self.angle,self.random_state,
+                    self.n_iter,self.n_iter_without_progress,
+                    self.min_grad_norm,self.n_iter_lying,
+                    self.n_iter_momentum_switch,self.verbose
+                    ]
+
+        parameters=str.join(" ",[str(p) for p in parameters])
         
-        self.embedding_ = np.loadtxt(self.file_name)
+        ut.run_tsne_command_line("./cpp/bh_tsne "+parameters)
+    
+        print(parameters)
+        #self.embedding_ = np.loadtxt(self.file_name)
         
     def fit_transform(self,X):
         """
