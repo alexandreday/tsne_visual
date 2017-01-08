@@ -181,7 +181,7 @@ class TSNE:
         self.verbose = verbose
         
         if random_state is None:
-            self.random_state = np.random.randint(0,4294967295)
+            self.random_state = np.random.randint(0,2147483647)
         else:
             self.random_state = random_state
                         
@@ -195,6 +195,7 @@ class TSNE:
             self.file_name="result.dat"
         
     def fit(self, X):
+        import os
         """
         Purpose:
             Fit X into the embedded space using the C++ executable
@@ -203,6 +204,8 @@ class TSNE:
             X : array, shape (n_samples, n_features)
         """
         
+        assert(len(X.shape)==2), "X must be a 2D array"
+        
         ut.data_to_binary(X,delimiter="\t")
         
         parameters=[self.n_components,self.perplexity,
@@ -210,13 +213,11 @@ class TSNE:
                     self.angle,self.random_state,
                     self.n_iter,self.n_iter_without_progress,
                     self.min_grad_norm,self.n_iter_lying,
-                    self.n_iter_momentum_switch,self.verbose
+                    self.n_iter_momentum_switch,self.verbose,
+                    X.shape[0],X.shape[1],os.getcwd()+"/dev_bhtsne-master/.data.dat"
                     ]
-
-        parameters=str.join(" ",[str(p) for p in parameters])
+        ut.run_tsne_command_line("./dev_bhtsne-master/bh_tsne",parameters)
         
-        ut.run_tsne_command_line("./cpp/bh_tsne "+parameters)
-    
         print(parameters)
         #self.embedding_ = np.loadtxt(self.file_name)
         

@@ -1,8 +1,11 @@
 import numpy as np
+import os
 from tsne import TSNE
+from sklearn import datasets
 
-
-X=np.loadtxt("example.txt",dtype=np.float32,delimiter="\t")
-print("Successfully read file... Contains %i samples and %i dimensions"%X.shape)
-f=TSNE(verbose=0)
-f.fit(X)
+print(os.getcwd())
+np.random.seed(0)
+tsne=TSNE()
+X,y=datasets.make_blobs(n_samples=1000,n_features=20,centers=20,random_state=0)
+tsne.fit(X)
+#os.system("./dev_bhtsne-master/bh_tsne -h")
