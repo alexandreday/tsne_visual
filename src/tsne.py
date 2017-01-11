@@ -154,7 +154,7 @@ class TSNE:
        
         
     def __init__(self, n_components=2, perplexity=30.0,
-                 early_exaggeration=4.0, learning_rate=1000.0, n_iter=1000,
+                 early_exaggeration=4.0, learning_rate=100.0, n_iter=1000,
                  n_iter_without_progress=30, min_grad_norm=1e-7,#metric="euclidean", 
                  init="random", PCA_n_components=None,verbose=0,
                  random_state=None, method='barnes_hut', angle=0.5,
@@ -216,7 +216,8 @@ class TSNE:
                     self.n_iter_momentum_switch,self.verbose,
                     X.shape[0],X.shape[1],os.getcwd()+"/dev_bhtsne-master/.data.dat"
                     ]
-        ut.run_tsne_command_line("./dev_bhtsne-master/bh_tsne",parameters)
+        
+        ut.run_tsne_command_line("/dev_bhtsne-master/bh_tsne",parameters)
         
         print(parameters)
         #self.embedding_ = np.loadtxt(self.file_name)
