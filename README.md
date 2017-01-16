@@ -8,7 +8,7 @@ Go to src/cpp and run:
 g++ sptree.cpp tsne.cpp -o bh_tsne -O2
 ```
 
-# Running from command line:
+# Running for command line (not yet implemented)
 From src/ run:
 ```
 $python tsne example.txt 40 4.0 1000 0.5 out_data_file.txt
@@ -18,6 +18,8 @@ For details on the meaning of those parameters, run:
 ```
 $python tsne -h
 ```
+# Running from a python script 
+For an example look at src/example/example.py. The syntax used is very similar to sklearn syntax.
 
 # Requirements:
 - Python3.x
@@ -25,12 +27,12 @@ $python tsne -h
 - Fairly common python packages:
   - sklearn
   - pandas
+- For running example.py
+  - seaborn 
 
 # Why this package ?
 During the course of a research project I ended up using t-SNE quite a bit for large datasets (N>20000). I wanted something 
-easy to use (i.e. in written in python !) but also very fast (i.e. with C/C++ speed). I also wanted to produce animations 
-of the t-SNE. To achieve all this I ended combining codes from multiple sources and writing a bit of code myself. I thought this
-might be useful for other people too.
+easy to use (i.e. in written in python, and that gave me easy access to all of t-SNE parameters) but also very fast (i.e. with C/C++ speed). I also wanted to produce animations of the t-SNE as a function of the iterations. To achieve all this I ended combining codes from multiple sources and writing a bit of code myself. I thought this might be useful for other people too. 
 
 # Some useful references:
 - [t-SNE's original author website](https://lvdmaaten.github.io/tsne/)
