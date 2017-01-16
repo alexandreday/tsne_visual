@@ -5,11 +5,12 @@ Created on Dec 23, 2016
 
 
 Purpose:
-    This is a python wrapper for performing t-SNE embeddings.
+    This is a python wrapper/package for performing t-SNE embeddings.
     It defines a tSNE class which mimics the syntax of sklearn package with similar methods 
     It adds new methods to produce animations of the t-SNE embedding
-    and quite fast since the underlying code is written in C++. 
-    See README.md and license for authors of the C++ code. 
+    and is quite fast since the underlying code is written in C++. 
+    See README.md and license for authors of the C++ code. The original 
+    bh_tsne C++ code was modified to accomodate more options.
 '''
 
 import numpy as np
@@ -33,6 +34,9 @@ class TSNE:
     if the number of features is very high. This will suppress some
     noise and speed up the computation of pairwise distances between
     samples. For more tips see Laurens van der Maaten's FAQ.
+    
+    Conventionally, data is saved in data.dat and tSNE results are 
+    saved in result.dat
     
     Ref.
         [1] http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne
@@ -150,10 +154,6 @@ class TSNE:
         Number of iteration that momentum is set to 0.5 (updates are equally averaged)
         After 'n_iter_momentum_switch' iterations, gradient descent updates are more reliable
         and thus we increase momentum to 0.8
-        
-        
-    Conventionally, data is saved in cpp/.data.dat
-    and tSNE results are saved in cpp/.result.dat
     
     """ 
        
@@ -194,7 +194,7 @@ class TSNE:
         self.angle = angle
         self.embedding_ = None
         
-        self.file_name=".result.dat"
+        self.file_name="result.dat"
         
     def fit(self, X):
         import os
@@ -219,8 +219,8 @@ class TSNE:
                     X.shape[0],X.shape[1],os.getcwd()+"/"
                     ]
                     
-        ut.run_tsne_command_line("/cpp/bh_tsne",parameters)
-        #print("Reading data from %s"%self.file_name)
+        ut.run_tsne_command_line(parameters)
+        
         self.embedding_ = np.fromfile(self.file_name).reshape(-1,self.n_components)
         
     def fit_transform(self,X):

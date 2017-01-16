@@ -693,11 +693,11 @@ double TSNE::randn() {
 // Note: this function does a malloc that should be freed elsewhere
 bool TSNE::load_data(double** data, int n, int d, string file_path){// int* no_dims, double* theta, double* perplexity, int* rand_seed, int* max_iter) {
     cout << "Gathering data from: ";
-	cout << file_path+".data.dat" << endl;
+	cout << file_path+"data.dat" << endl;
 
 	// Open file, allocate memory, and read the data
     FILE *h;
-	if((h = fopen((file_path+".data.dat").c_str(), "r+b")) == NULL) {
+	if((h = fopen((file_path+"data.dat").c_str(), "r+b")) == NULL) {
 		printf("Error: could not open data file.\n");
 		return false;
 	}
@@ -714,7 +714,7 @@ void TSNE::save_data(double* data, int n, int d, string file_path) {
 
 	// Open file, write first 2 integers and then the data
 	FILE *h;
-	if((h = fopen((file_path+".result.dat").c_str(), "w+b")) == NULL) {
+	if((h = fopen((file_path+"result.dat").c_str(), "w+b")) == NULL) {
 		printf("Error: could not open result file.\n");
 		return;
 	}
@@ -731,7 +731,7 @@ void TSNE::save_data(double* data, int n, int d, string file_path) {
 //    fclose(h);
     
     printf("Wrote the %i x %i data matrix successfully!\n", n, d);
-    cout << "Results are stored in binary form in file: "+file_path+".result.dat\n\n";
+    cout << "Results are stored in binary form in file: "+file_path+"result.dat\n\n";
     
 }
 

@@ -43,26 +43,3 @@ plt.legend(loc='best')
 print('Voila !')
 plt.show()
 
-
-
-
-
-
-
-
-
-
-
-#print(pca.explained_variance_ratio_)
-#scipy.io.savemat('/Users/robertday/Desktop/mnistPCA.mat', mdict={'arr': pca.explained_variance_ratio_})
-#np.savetxt("/Users/robertday/Desktop/mnistPCA.mat",pca.explained_variance_ratio_)
-
-
-#print(x.shape)
-
-
-#X,y=datasets.make_blobs(n_samples=10000,n_features=20,centers=20,random_state=0)
-
-
-#tsne.fit(X)
-#os.system("./dev_bhtsne-master/bh_tsne -h")
