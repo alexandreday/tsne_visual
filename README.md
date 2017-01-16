@@ -9,7 +9,7 @@ g++ sptree.cpp tsne.cpp -o bh_tsne -O2
 ```
 # Running from a python script 
 For an example look at ```src/example/example.py```. This is an example of t-SNE applied to the MNIST data set (also provided).
-The syntax used is very similar to sklearn syntax. 
+The syntax used is very similar to [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne) syntax. The C++ executable ```bh_tsne``` should be in your working directory. The script ```example.py``` imports functions and classes from ```src/tsne.py``` and ```src/utilities```. 
 
 # Running for command line (not yet implemented)
 From ```src/``` run:
