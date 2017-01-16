@@ -692,7 +692,7 @@ double TSNE::randn() {
 // Function that loads data from a t-SNE file
 // Note: this function does a malloc that should be freed elsewhere
 bool TSNE::load_data(double** data, int n, int d, string file_path){// int* no_dims, double* theta, double* perplexity, int* rand_seed, int* max_iter) {
-    cout << "Gathering data from:" << endl;
+    cout << "Gathering data from: ";
 	cout << file_path+".data.dat" << endl;
 
 	// Open file, allocate memory, and read the data

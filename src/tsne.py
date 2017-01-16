@@ -219,7 +219,7 @@ class TSNE:
                     X.shape[0],X.shape[1],os.getcwd()+"/"
                     ]
                     
-        ut.run_tsne_command_line("/dev_bhtsne-master/bh_tsne",parameters)
+        ut.run_tsne_command_line("/cpp/bh_tsne",parameters)
         #print("Reading data from %s"%self.file_name)
         self.embedding_ = np.fromfile(self.file_name).reshape(-1,self.n_components)
         
