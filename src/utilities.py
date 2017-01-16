@@ -5,32 +5,18 @@ Created on Jan 5, 2017
 '''
 import numpy as np
 
-def data_to_binary(X,tmp_binfile="dev_bhtsne-master/.data.dat",delimiter=None):
+def data_to_binary(X,tmp_binfile=".data.dat",delimiter=None):
     """
     Purpose:
-        Writes it in binary format in default file 'cpp/.data.dat' for tsne c++ exec. to use.
+        Writes it in binary format in default file '.data.dat' for tsne c++ exec. to use.
     """
-    print("Saving data in %s"%tmp_binfile)
+    
+    #print("Saving data in %s"%tmp_binfile)
     output_file=open(tmp_binfile,'wb')
     from array import array
     float_array = array('d', X.flatten())
     float_array.tofile(output_file)
     output_file.close()
-
-
-def bh_tsne(workdir, verbose=False):
-
-    # Call bh_tsne and let it do its thing
-    with open(devnull, 'w') as dev_null:
-        bh_tsne_p = Popen((abspath(BH_TSNE_BIN_PATH), ), cwd=workdir,
-                # bh_tsne is very noisy on stdout, tell it to use stderr
-                #   if it is to print any output
-                stdout=stderr if verbose else dev_null)
-        bh_tsne_p.wait()
-        assert not bh_tsne_p.returncode, ('ERROR: Call to bh_tsne exited '
-                'with a non-zero return code exit status, please ' +
-                ('enable verbose mode and ' if not verbose else '') +
-                'refer to the bh_tsne output for further details')
 
 
 def run_tsne_command_line(exec_path,parameters):
@@ -40,5 +26,5 @@ def run_tsne_command_line(exec_path,parameters):
     """
     import subprocess
     param_str=[str(p) for p in parameters]
-    subprocess.run(['./dev_bhtsne-master/bh_tsne']+param_str)    
+    subprocess.run(['./bh_tsne']+param_str)    
     

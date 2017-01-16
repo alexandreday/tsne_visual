@@ -150,6 +150,11 @@ class TSNE:
         Number of iteration that momentum is set to 0.5 (updates are equally averaged)
         After 'n_iter_momentum_switch' iterations, gradient descent updates are more reliable
         and thus we increase momentum to 0.8
+        
+        
+    Conventionally, data is saved in cpp/.data.dat
+    and tSNE results are saved in cpp/.result.dat
+    
     """ 
        
         
@@ -158,7 +163,7 @@ class TSNE:
                  n_iter_without_progress=30, min_grad_norm=1e-7,#metric="euclidean", 
                  init="random", PCA_n_components=None,verbose=0,
                  random_state=None, method='barnes_hut', angle=0.5,
-                 animate=False,file_name="auto",
+                 animate=False,
                  n_iter_lying=200,n_iter_momentum_switch=200
                  ):
         if not (init in ["pca", "random"]):
@@ -189,10 +194,7 @@ class TSNE:
         self.angle = angle
         self.embedding_ = None
         
-        if file_name=="auto":
-            self.file_name="function_for_name_here.dat"
-        else:
-            self.file_name="result.dat"
+        self.file_name=".result.dat"
         
     def fit(self, X):
         import os
@@ -214,13 +216,12 @@ class TSNE:
                     self.n_iter,self.n_iter_without_progress,
                     self.min_grad_norm,self.n_iter_lying,
                     self.n_iter_momentum_switch,self.verbose,
-                    X.shape[0],X.shape[1],os.getcwd()+"/dev_bhtsne-master/.data.dat"
+                    X.shape[0],X.shape[1],os.getcwd()+"/"
                     ]
-        
+                    
         ut.run_tsne_command_line("/dev_bhtsne-master/bh_tsne",parameters)
-        
-        print(parameters)
-        #self.embedding_ = np.loadtxt(self.file_name)
+        #print("Reading data from %s"%self.file_name)
+        self.embedding_ = np.fromfile(self.file_name).reshape(-1,self.n_components)
         
     def fit_transform(self,X):
         """

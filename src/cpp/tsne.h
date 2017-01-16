@@ -34,19 +34,98 @@
 #ifndef TSNE_H
 #define TSNE_H
 
+#include <string>
+#include <cassert>
+#include <iostream>
+
+using namespace std;
 
 static inline double sign(double x) { return (x == .0 ? .0 : (x < .0 ? -1.0 : 1.0)); }
 
+//bool stob(string s){
+//    if(s.compare("true")==0){
+//        return true;
+//    }
+//    if(s.compare("false")==0){
+//        return false;
+//    }
+//    assert(false);
+//}
+
+struct tsne_parameters{
+    
+    double perplexity,early_exag,eta,theta,min_grad_norm;
+    int n_dims,rand_seed,max_iter,n_iter_without_progress,stop_lying_iter,mom_switch_iter,verbose,n_sample,n_feature;
+    string file_path;
+    
+    tsne_parameters(){
+        // Default parameters
+        n_dims=2;
+        perplexity=40.0;
+        early_exag=4.0;
+        eta=1000; // learning rate
+        theta=0.5; // barnes-hut angle
+        rand_seed=0;
+        max_iter=1000;
+        n_iter_without_progress=100;
+        min_grad_norm=1e-7;
+        stop_lying_iter=250;
+        mom_switch_iter=250;
+        verbose=1;
+        n_sample=0;
+        n_feature=0;
+        file_path="";
+    }
+    
+    tsne_parameters(char* argv[]){
+        update(argv);
+    }
+    
+    void update(char* argv[]){
+        n_dims=stoi(argv[1]);
+        perplexity=stof(argv[2]);
+        early_exag=stof(argv[3]);
+        eta=stof(argv[4]);
+        theta=stof(argv[5]);
+        rand_seed=stoi(argv[6]);
+        max_iter=stoi(argv[7]);
+        n_iter_without_progress=stoi(argv[8]);
+        min_grad_norm=stof(argv[9]);
+        stop_lying_iter=stoi(argv[10]);
+        mom_switch_iter=stoi(argv[11]);
+        verbose=stoi(argv[12]);
+        n_sample=stoi(argv[13]);
+        n_feature=stoi(argv[14]);
+        file_path=argv[15];
+    }
+    
+    void print(){
+        cout << "--- t-SNE parameters ---" << endl;
+        printf("Embedding dimension\t\t%i",n_dims);
+        printf("Perplexity\t\t\t%.2f\n",perplexity);
+        printf("Early exaggeration\t\t%.2f\n",early_exag);
+        printf("Learning rate\t\t\t%.2f\n",eta);
+        printf("Barnes-Hut angle\t\t%.2f\n",theta);
+        printf("Random seed\t\t\t%i\n",rand_seed);
+        printf("Max iteration\t\t\t%i\n",max_iter);
+        printf("Number of iter w/o prog\t\t%i\n",n_iter_without_progress);
+        printf("Min grad norm\t\t\t%.3e\n",min_grad_norm);
+        printf("Lie switch\t\t\t%i\n",stop_lying_iter);
+        printf("Momentum switch\t\t\t%i\n",mom_switch_iter);
+        printf("Verbose on ?\t\t\t%i\n",verbose);
+        printf("Number of samples\t\t\t%i\n",n_sample);
+        printf("Number of features\t\t\t%i\n",n_feature);
+    }
+};
 
 class TSNE
-{    
+{
 public:
-    void run(double* X, int N, int D, int max_iter, double* Y, int no_dims, double perplexity, double theta, double early_exaggeration, string path,int mod_to_save);
-    bool load_data(double** data, int* n, int* d, int* max_iter, int* no_dims, double* theta, double* perplexity, double* early_exaggeration, int* rand_seed);
-    void save_data(double* data, int* landmarks, double* costs, int n, int d);
+    void run(double* X, int N, int D, double* Y, int no_dims, tsne_parameters param=tsne_parameters());
+    bool load_data(double** data, int n, int d, string file_path);
+    void save_data(double* data, int n, int d, string file_path);
     void symmetrizeMatrix(unsigned int** row_P, unsigned int** col_P, double** val_P, int N); // should be static!
 
-    
 private:
     void computeGradient(double* P, unsigned int* inp_row_P, unsigned int* inp_col_P, double* inp_val_P, double* Y, int N, int D, double* dC, double theta);
     void computeExactGradient(double* P, double* Y, int N, int D, double* dC);
@@ -60,4 +139,3 @@ private:
 };
 
 #endif
-
