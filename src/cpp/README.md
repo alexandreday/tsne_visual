@@ -14,4 +14,4 @@ The executable will be called `bh_tsne`.
 
 # Usage #
 
-Copy the executable bh_tsne to your working directory (where you will use tsne.py). tsne.py write your data to a file called `.data.dat`, run the `bh_tsne` binary, and read the result file `.result.dat` that the binary produces.
+Copy the executable bh_tsne to your working directory (where you will use tsne.py). The python file tsne.py writes your data to a file called `.data.dat`, run the `bh_tsne` binary, and read the result file `.result.dat` that the binary produces.
