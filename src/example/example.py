@@ -7,7 +7,7 @@ from read_MNIST import load_mnist
 from sklearn.decomposition import PCA
 from sklearn import preprocessing as prep
 from matplotlib import pyplot as plt
-import latex
+#import latex
 import time
 
 np.set_printoptions(suppress=True)
