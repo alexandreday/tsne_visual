@@ -3,13 +3,16 @@ A Python3 package for running, visualizing and producing animations of t-distrib
 The code is a modified version of bhtsne taken from [Laurens van der Maaten repository](https://github.com/lvdmaaten/bhtsne). The package implements t-SNE as a Class following the [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne) syntax. 
 
 # Compiling C++ code:
-Go to src/cpp and run:
+Go to ```src/cpp/``` and run:
 ```
 g++ sptree.cpp tsne.cpp -o bh_tsne -O2
 ```
+# Running from a python script 
+For an example look at ```src/example/example.py```. This is an example of t-SNE applied to the MNIST data set (also provided).
+The syntax used is very similar to sklearn syntax. 
 
 # Running for command line (not yet implemented)
-From src/ run:
+From ```src/``` run:
 ```
 $python tsne example.txt 40 4.0 1000 0.5 out_data_file.txt
 ```
@@ -18,9 +21,6 @@ For details on the meaning of those parameters, run:
 ```
 $python tsne -h
 ```
-# Running from a python script 
-For an example look at src/example/example.py. The syntax used is very similar to sklearn syntax.
-
 # Requirements:
 - Python3.x
 - ffmpeg software (optional - for producing animations)
