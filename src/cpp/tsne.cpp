@@ -91,7 +91,7 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims,tsne_parameters p
     // Determine whether we are using an exact algorithm
     if(N - 1 < 3 * perplexity) { printf("Perplexity too large for the number of data points!\n"); exit(1); }
     printf("Using no_dims = %d, perplexity = %f, and theta = %f\n", no_dims, perplexity, theta);
-    bool exact = (theta == .0) ? true : false;
+    bool exact = (theta < .01) ? true : false;
 
     // Set learning parameters
     float total_time = .0;
