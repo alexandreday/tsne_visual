@@ -2,33 +2,28 @@
 A Python3 package for running, visualizing and producing animations of t-distributed stochastic Nearest-Neighbor Embedding (t-SNE) implemented in C++.
 The code is a modified version of bhtsne taken from [Laurens van der Maaten repository](https://github.com/lvdmaaten/bhtsne). The package implements t-SNE as a Class following the [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne) syntax. 
 
-# Compiling C++ code:
-Go to ```src/cpp/``` and run:
+# Installing and running (in a few steps) :
+1. Clone or download this repository
+2. Compile C++ code:
+
+  Go to ```cpp/``` and run the command:
 ```
 g++ sptree.cpp tsne.cpp -o bh_tsne -O2
 ```
-Now copy the executable generated to your working directory.
+3. Copy the executable called ```bh_tsne``` to the directory you'll be running t-SNE (where your Python scripts are).
+4. Finally install the t-SNE package. From within the repository, use:
+```
+pip3 install .
+```
+# Example script for MNIST: 
+For an example look at ```example/example.py```. This is an example of t-SNE applied to the MNIST data set (provided in ```example/MNIST/```).
+The syntax used is very similar to [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne) syntax. The C++ executable ```bh_tsne``` needs to be copied to the ```example/``` in order to run the ```example.py```.
 
-# Running from a python script 
-For an example look at ```src/example/example.py```. This is an example of t-SNE applied to the MNIST data set (provided in ```src/example/MNIST/```).
-The syntax used is very similar to [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne) syntax. The C++ executable ```bh_tsne``` should be in your working directory. The script ```example.py``` imports functions and classes from ```src/tsne.py``` and ```src/utilities.py```. 
-
-# Running for command line (not yet implemented)
-From ```src/``` run:
-```
-$python tsne example.txt 40 4.0 1000 0.5 out_data_file.txt
-```
-
-For details on the meaning of those parameters, run:
-```
-$python tsne -h
-```
 # Requirements:
 - Python3.x
 - ffmpeg software (optional - for producing animations)
 - Fairly common python packages:
   - sklearn
-  - pandas
 - For running example.py
   - seaborn 
 
