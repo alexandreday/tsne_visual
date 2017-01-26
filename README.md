@@ -3,15 +3,13 @@ A Python3 package for running, visualizing and producing animations of t-distrib
 The code is a modified version of bhtsne taken from [Laurens van der Maaten repository](https://github.com/lvdmaaten/bhtsne). The package implements t-SNE as a Class following the [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne) syntax. 
 
 # Installing and running (in a few steps) :
-1. Clone or download this repository
-2. Compile C++ code:
-
-  Go to ```cpp/``` and run the command:
+- Clone or download this repository
+- Compile C++ code: go to ```cpp/``` and run the command:
 ```
 g++ sptree.cpp tsne.cpp -o bh_tsne -O2
 ```
-3. Copy the executable called ```bh_tsne``` to the directory you'll be running t-SNE (where your Python scripts are).
-4. Finally install the t-SNE package. From within the repository, use:
+- Copy the executable called ```bh_tsne``` to the directory you'll be running t-SNE (where your Python scripts are).
+- Finally install the t-SNE package: from within the repository, use:
 ```
 pip3 install .
 ```
