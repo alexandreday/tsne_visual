@@ -13,12 +13,11 @@ Purpose:
     bh_tsne C++ code was modified to accomodate more options.
 '''
 
+from . import utilities as ut
 import numpy as np
-import pickle
-import pandas as pd
-import utilities as ut
 
 class TSNE:
+
     """t-distributed Stochastic Neighbor Embedding.
 
     t-SNE is a tool to visualize high-dimensional data. It converts
