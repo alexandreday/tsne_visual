@@ -13,8 +13,8 @@ Purpose:
     bh_tsne C++ code was modified to accomodate more options.
 '''
 
-from . import utilities as ut
 import numpy as np
+from . import utils as ut
 
 class TSNE:
 

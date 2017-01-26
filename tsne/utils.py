@@ -3,6 +3,7 @@ Created on Jan 5, 2017
 
 @author: Alexandre Day
 '''
+
 import numpy as np
 
 def data_to_binary(X,tmp_binfile="data.dat",delimiter=None):
