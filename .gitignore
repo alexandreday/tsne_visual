@@ -1,0 +1,28 @@
+# compliled python code #
+*.pyc
+*.pyf
+# cpp libraries
+*.so
+# pure fortran source files #
+*.f90
+# cython source file #
+*.pyx
+# gallery files
+#src/gallery
+# backup files from gedit #
+dev_bhtsne-master
+*~
+# invisible files
+.*
+!.gitignore
+# Python egg metadata, regenerated from source files by setuptools.
+/*.egg-info
+# build directories
+build/
+bin/
+dist/
+# Result and data files
+result.dat
+data.dat
+bh_tsne
+
