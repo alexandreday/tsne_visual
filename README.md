@@ -16,6 +16,8 @@ pip3 install .
 # Example script for MNIST: 
 For an example look at ```example/example.py```. This is an example of t-SNE applied to the MNIST data set (provided in ```example/MNIST/```).
 The syntax used is very similar to [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne) syntax. The C++ executable ```bh_tsne``` needs to be copied to the ```example/``` in order to run the ```example.py```.
+It should a produce a figure similar to this:
+
 
 # Requirements:
 - Python3.x
