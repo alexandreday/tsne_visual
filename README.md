@@ -14,7 +14,7 @@ That's it, you're good to go ! You can now import ```tsne_visual``` from anywher
 for a quick start.
 # Example script for MNIST: 
 For an example look at ```example/example.py```. This is an example of t-SNE applied to the MNIST data set (provided in ```example/MNIST/```).
-The syntax used is very similar to [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne) syntax. The C++ executable ```bh_tsne``` needs to be copied to the ```example/``` in order to run the ```example.py```.
+The syntax used is very similar to [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne) syntax.
 It should a produce a figure similar to this: ![alt tag](https://github.com/alexandreday/tsne_visual/blob/master/gallery/MNIST-1.png)
 
 # Requirements:
