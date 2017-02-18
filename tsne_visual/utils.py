@@ -27,7 +27,12 @@ def run_tsne_command_line(parameters,default_path="."):
         By default the bh_tsne.exe should be in the current working directory
         This can be changed by choosing a different default_path
     """
-    import subprocess
+    import subprocess, os
+    import tsne_visual.utils as tmp
+    
+    dir_source=os.path.dirname(tmp.__file__)
+    
     param_str=[str(p) for p in parameters]
-    subprocess.run([default_path+'/bh_tsne']+param_str)    
+
+    subprocess.run([dir_source+'/bh_tsne']+param_str)
     

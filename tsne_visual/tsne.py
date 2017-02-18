@@ -10,7 +10,8 @@ Purpose:
     It adds new methods to produce animations of the t-SNE embedding
     and is quite fast since the underlying code is written in C++. 
     See README.md and license for authors of the C++ code. The original 
-    bh_tsne C++ code was modified to accomodate more options.
+    bh_tsne C++ code was modified to accomodate more options w.r.t to the gradient descent
+	parameters.
 '''
 
 import numpy as np

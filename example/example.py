@@ -1,6 +1,6 @@
 import numpy as np
 import seaborn as sns
-from tsne.tsne import TSNE
+from tsne_visual.tsne import TSNE
 from read_MNIST import load_mnist
 from sklearn.decomposition import PCA
 from matplotlib import pyplot as plt
