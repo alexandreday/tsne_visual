@@ -35,5 +35,5 @@ easy to use (i.e. in written in python, and that gave me easy access to all of t
 
 # Uninstalling !
 ```
-pip uninstall tsne_visual
+pip3 uninstall tsne_visual
 ```
