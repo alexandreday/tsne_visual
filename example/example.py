@@ -5,8 +5,6 @@ from sklearn.decomposition import PCA
 from matplotlib import pyplot as plt
 import time
 
-np.set_printoptions(suppress=True)
-
 print("--> Running t-SNE on MNIST (with n=10000), then plotting the result")
 
 np.random.seed(0) # Always same seed here <--
@@ -20,9 +18,7 @@ pca=PCA(n_components=40)
 xpca=pca.fit_transform(x)
 
 ## Running t-SNE with default parameters !
-tsne=TSNE()
-## Otherwise use something like TSNE(perplexity=50, n_iter=2000, angle=0.3)
-print("--> Now let's run the t-SNE for %i iterations !\n\n"%n_iter)
+tsne=TSNE(n_iter=300) ## Otherwise use something like TSNE(perplexity=50, n_iter=2000, angle=0.3)
 start=time.time() 
 xtsne=tsne.fit_transform(xpca)
 dt=time.time()-start
@@ -39,6 +35,7 @@ plt.xlabel('t-SNE 1')
 plt.ylabel('t-SNE 2')
 plt.legend(loc='best')
 plt.tight_layout()
+plt.grid(True)
 print('Voila !')
 plt.show()
 
