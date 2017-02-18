@@ -1,5 +1,5 @@
 import numpy as np
-from tsne_visual.tsne import TSNE
+from tsne_visual import TSNE
 from read_MNIST import load_mnist
 from sklearn.decomposition import PCA
 from matplotlib import pyplot as plt

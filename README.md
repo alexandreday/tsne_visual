@@ -10,8 +10,8 @@ The code is a modified version of bhtsne taken from [Laurens van der Maaten repo
 g++ cpp/sptree.cpp cpp/tsne.cpp -o tsne_visual/bh_tsne -O2
 pip3 install .
 ```
-That's it, you're good to go !
-
+That's it, you're good to go ! You can now import ```tsne_visual``` from anywhere. See the following example
+for a quick start.
 # Example script for MNIST: 
 For an example look at ```example/example.py```. This is an example of t-SNE applied to the MNIST data set (provided in ```example/MNIST/```).
 The syntax used is very similar to [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne) syntax. The C++ executable ```bh_tsne``` needs to be copied to the ```example/``` in order to run the ```example.py```.
