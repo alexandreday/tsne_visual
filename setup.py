@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='tsne_visual',
-      version='0.1',
+      version='0.2',
       description='Python/C++ simple tools for running and visualizing t-SNE for low dimensional embeddings',
       url='https://github.com/alexandreday/tsne_visual',
       author='Alexandre Day',

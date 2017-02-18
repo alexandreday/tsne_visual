@@ -1,6 +1,6 @@
-# tsne_visual (version 0.2)
+# tsne_visual (version 0.2) - for OSX and linux
 A Python3 package for running, visualizing and producing animations of t-distributed stochastic Nearest-Neighbor Embedding (t-SNE) implemented in C++.
-The code is a modified version of bhtsne taken from [Laurens van der Maaten repository](https://github.com/lvdmaaten/bhtsne). The package implements t-SNE as a Class following the [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne) syntax. 
+The code is a modified version of bhtsne taken from [Laurens van der Maaten repository](https://github.com/lvdmaaten/bhtsne). The package implements t-SNE as a Class following the [sklearn](http://scikit-learn.org/stable/modules/manifold.html#t-distributed-stochastic-neighbor-embedding-t-sne) syntax.
 
 # Installing and running (in a few steps) :
 - Clone or download this repository
@@ -17,6 +17,7 @@ The syntax used is very similar to [sklearn](http://scikit-learn.org/stable/modu
 It should a produce a figure similar to this: ![alt tag](https://github.com/alexandreday/tsne_visual/blob/master/gallery/MNIST-1.png)
 
 # Requirements:
+- g++ compiler (for the C++ code)
 - Python3.x
 - ffmpeg software (optional - for producing animations)
 - [scikit-learn package](http://scikit-learn.org/stable/install.html)
