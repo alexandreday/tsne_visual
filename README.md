@@ -5,9 +5,10 @@ The code is a modified version of bhtsne taken from [Laurens van der Maaten repo
 # Installing and running (in a few steps) :
 - Clone or download this repository
 - Open file
-- Compile C++ code and install the package with the following command :
+- Compile C++ code and install the package with the following commands:
 ```
-make
+g++ cpp/sptree.cpp cpp/tsne.cpp -o tsne_visual/bh_tsne -O2
+pip3 install .
 ```
 That's it, you're good to go !
 
