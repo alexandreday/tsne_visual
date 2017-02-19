@@ -64,19 +64,6 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims,tsne_parameters p
     int mom_switch_iter=param.mom_switch_iter;
     bool verbose=param.verbose;
     
-//    cout << "perplexity\t" << perplexity << endl;
-//    cout << "early_exag\t" << early_exag << endl;
-//    cout << "eta\t" <<eta << endl;
-//    cout << "theta\t" <<theta << endl;
-//    cout << "rand_seed\t" <<rand_seed << endl;
-//    cout << "skip_random_init\t" <<skip_random_init << endl;
-//    cout << "max_iter\t" <<max_iter << endl;
-//    cout << "n_iter_wo_prog\t" <<n_iter_without_progress << endl;
-//    cout << "min_grad_norm\t" <<min_grad_norm << endl;
-//    cout << "stop_lying_iter\t" <<stop_lying_iter << endl;
-//    cout << "mom_switch-iter\t" <<mom_switch_iter << endl;
-//    cout << "verbose\t" <<verbose << endl;
-    
     srand(rand_seed); // using python's or user's seed
     
 //    if(skip_random_init){
