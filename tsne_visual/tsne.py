@@ -18,7 +18,7 @@ import numpy as np
 from . import utils as ut
 
 class TSNE:
-
+    
     """t-distributed Stochastic Neighbor Embedding.
 
     t-SNE is a tool to visualize high-dimensional data. It converts
@@ -198,12 +198,16 @@ class TSNE:
         
     def fit(self, X):
         import os
-        """
-        Purpose:
-            Fit X into the embedded space using the C++ executable
+        """Fit X into the embedded space using the C++ executable
+
+        Parameter
+        ---------
+        X : array, shape (n_samples, n_features)
         
-        Parameter:
-            X : array, shape (n_samples, n_features)
+        Return 
+        --------
+        None
+
         """
         
         assert(len(X.shape)==2), "X must be a 2D array"
@@ -221,15 +225,19 @@ class TSNE:
                     
         ut.run_tsne_command_line(parameters)
         
+        self.KLscore_ = np.loadtxt('KL_score.txt', dtype=float, delimiter='\t')
         self.embedding_ = np.fromfile(self.file_name).reshape(-1,self.n_components)
         
     def fit_transform(self,X):
-        """
-        Purpose:
-            Fit X into the embedded space using the C++ executable
+        """Fit X into the embedded space using the C++ executable
         
-        Parameter:
-            X : array, shape (n_samples, n_features)
+        Parameter
+        ----------
+        X : array, shape (n_samples, n_features)
+
+        Return
+        ----------
+        Embedding : array, shape (n_samples, n_components)
         """
         self.fit(X)
         

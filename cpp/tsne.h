@@ -121,7 +121,7 @@ struct tsne_parameters{
 class TSNE
 {
 public:
-    void run(double* X, int N, int D, double* Y, int no_dims, tsne_parameters param=tsne_parameters());
+    void run(double* X, int N, int D, double* Y, int no_dims, string file_path, tsne_parameters param=tsne_parameters());
     bool load_data(double** data, int n, int d, string file_path);
     void save_data(double* data, int n, int d, string file_path);
     void symmetrizeMatrix(unsigned int** row_P, unsigned int** col_P, double** val_P, int N); // should be static!

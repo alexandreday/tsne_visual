@@ -37,10 +37,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <cstring>
+#include <string>
+#include <fstream>
 #include <time.h>
 #include "vptree.h"
 #include "sptree.h"
 #include "tsne.h"
+#include <vector>
 
 
 using namespace std;
@@ -48,7 +51,7 @@ using namespace std;
 // Perform t-SNE
 
 
-void TSNE::run(double* X, int N, int D, double* Y, int no_dims,tsne_parameters param){
+void TSNE::run(double* X, int N, int D, double* Y, int no_dims, string file_path, tsne_parameters param){
     
     // Assigning values
     double perplexity=param.perplexity;
@@ -63,6 +66,7 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims,tsne_parameters p
     int stop_lying_iter=param.stop_lying_iter;
     int mom_switch_iter=param.mom_switch_iter;
     bool verbose=param.verbose;
+    vector<pair<int, double> > KLscore;
     
     srand(rand_seed); // using python's or user's seed
     
@@ -77,7 +81,7 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims,tsne_parameters p
 
     // Determine whether we are using an exact algorithm
     if(N - 1 < 3 * perplexity) { printf("Perplexity too large for the number of data points!\n"); exit(1); }
-    printf("Using no_dims = %d, perplexity = %f, and theta = %f\n", no_dims, perplexity, theta);
+    printf("Using no_dims = %d, perplexity = %f, theta = %f, n_iter = %d \n", no_dims, perplexity, theta, max_iter);
     bool exact;
     if(theta < 0.01){
     	exact=true;
@@ -201,6 +205,7 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims,tsne_parameters p
                 total_time += (float) (end - start) / CLOCKS_PER_SEC;
                 printf("Iteration %d: error is %f (50 iterations in %4.2f seconds)\n", iter, C, (float) (end - start) / CLOCKS_PER_SEC);
             }
+            KLscore.push_back(pair<int,double>(iter,C));
 			start = clock();
         }
     }
@@ -217,6 +222,13 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims,tsne_parameters p
         free(val_P); val_P = NULL;
     }
     printf("Fitting performed in %4.2f seconds.\n", total_time);
+    
+
+    ofstream fout(file_path+"KL_score.txt");
+    // Saving KL divergence score
+    for(vector<pair<int,double> >::iterator i=KLscore.begin(); i != KLscore.end(); i++){
+        fout << (*i).first << "\t" << (*i).second << endl;
+    }
 }
 
 
@@ -767,14 +779,14 @@ int main(int argc, char* argv[])
     file_path=parameters.file_path;
 
     // --- Read the parameters and the dataset ---
-	if(tsne->load_data(&data, N, D,file_path)) {
+	if(tsne->load_data(&data, N, D, file_path)) {
 		// Now fire up the SNE implementation
 		double* Y = (double*) malloc(N * no_dims * sizeof(double));
 		double* costs = (double*) calloc(N, sizeof(double));
         if(Y == NULL || costs == NULL) { printf("Memory allocation failed!\n"); exit(1); }
 		
         // Run t-SNE
-        tsne->run(data, N, D, Y, no_dims,parameters);
+        tsne->run(data, N, D, Y, no_dims, file_path, parameters);
 
 		// Save the results
 		tsne->save_data(Y, N, no_dims, file_path);
