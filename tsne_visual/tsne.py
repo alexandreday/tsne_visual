@@ -195,6 +195,8 @@ class TSNE:
         self.embedding_ = None
         
         self.file_name="result.dat"
+
+        return self
         
     def fit(self, X):
         import os
