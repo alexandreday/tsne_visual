@@ -195,8 +195,6 @@ class TSNE:
         self.embedding_ = None
         
         self.file_name="result.dat"
-
-        return self
         
     def fit(self, X):
         import os
@@ -229,6 +227,8 @@ class TSNE:
         
         self.KLscore_ = np.loadtxt('KL_score.txt', dtype=float, delimiter='\t')
         self.embedding_ = np.fromfile(self.file_name).reshape(-1,self.n_components)
+
+        return self
         
     def fit_transform(self,X):
         """Fit X into the embedded space using the C++ executable
