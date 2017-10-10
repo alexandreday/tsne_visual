@@ -56,7 +56,7 @@ struct tsne_parameters{
     
     double perplexity,early_exag,eta,theta,min_grad_norm;
     int n_dims,rand_seed,max_iter,n_iter_without_progress,stop_lying_iter,mom_switch_iter,verbose,n_sample,n_feature;
-    string file_path;
+    string file_path, file_suffix;
     
     tsne_parameters(){
         // Default parameters
@@ -75,13 +75,14 @@ struct tsne_parameters{
         n_sample=0;
         n_feature=0;
         file_path="";
+        file_suffix = "";
     }
     
     tsne_parameters(char* argv[]){
         update(argv);
     }
     
-    void update(char* argv[]){
+    void update(char* argv[]){ // parsing the command line
         n_dims=stoi(argv[1]);
         perplexity=stof(argv[2]);
         early_exag=stof(argv[3]);
@@ -97,6 +98,7 @@ struct tsne_parameters{
         n_sample=stoi(argv[13]);
         n_feature=stoi(argv[14]);
         file_path=argv[15];
+        file_suffix = argv[16];
     }
     
     void print(){
@@ -122,8 +124,8 @@ class TSNE
 {
 public:
     void run(double* X, int N, int D, double* Y, int no_dims, string file_path, tsne_parameters param=tsne_parameters());
-    bool load_data(double** data, int n, int d, string file_path);
-    void save_data(double* data, int n, int d, string file_path);
+    bool load_data(double** data, int n, int d, string file_path, string file_suffix);
+    void save_data(double* data, int n, int d, string file_path, string file_suffix);
     void symmetrizeMatrix(unsigned int** row_P, unsigned int** col_P, double** val_P, int N); // should be static!
 
 private:

@@ -66,6 +66,7 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims, string file_path
     int stop_lying_iter=param.stop_lying_iter;
     int mom_switch_iter=param.mom_switch_iter;
     bool verbose=param.verbose;
+    string file_suffix = param.file_suffix;
     vector<pair<int, double> > KLscore;
     
     srand(rand_seed); // using python's or user's seed
@@ -224,7 +225,7 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims, string file_path
     printf("Fitting performed in %4.2f seconds.\n", total_time);
     
 
-    ofstream fout(file_path+"KL_score.txt");
+    ofstream fout(file_path+"KL_score_"+file_suffix+".txt");
     // Saving KL divergence score
     for(vector<pair<int,double> >::iterator i=KLscore.begin(); i != KLscore.end(); i++){
         fout << (*i).first << "\t" << (*i).second << endl;
@@ -697,13 +698,14 @@ double TSNE::randn() {
 
 // Function that loads data from a t-SNE file
 // Note: this function does a malloc that should be freed elsewhere
-bool TSNE::load_data(double** data, int n, int d, string file_path){// int* no_dims, double* theta, double* perplexity, int* rand_seed, int* max_iter) {
+bool TSNE::load_data(double** data, int n, int d, string file_path, string file_suffix){// int* no_dims, double* theta, double* perplexity, int* rand_seed, int* max_iter) {
     cout << "Gathering data from: ";
-	cout << file_path+"data.dat" << endl;
+    string full_file_name = file_path+".tmp_"+file_suffix+".dat";
+        //cout << full_file_name << endl;
 
 	// Open file, allocate memory, and read the data
     FILE *h;
-	if((h = fopen((file_path+"data.dat").c_str(), "r+b")) == NULL) {
+	if((h = fopen((full_file_name).c_str(), "r+b")) == NULL) {
 		printf("Error: could not open data file.\n");
 		return false;
 	}
@@ -716,28 +718,23 @@ bool TSNE::load_data(double** data, int n, int d, string file_path){// int* no_d
 }
 
 // Function that saves map to a t-SNE file
-void TSNE::save_data(double* data, int n, int d, string file_path) {
+void TSNE::save_data(double* data, int n, int d, string file_path, string file_suffix) {
 
 	// Open file, write first 2 integers and then the data
 	FILE *h;
-	if((h = fopen((file_path+"result.dat").c_str(), "w+b")) == NULL) {
+    
+    string full_file_name = file_path+"tSNE_"+file_suffix+".txt";
+    
+    if((h = fopen((full_file_name).c_str(), "w")) == NULL) {
 		printf("Error: could not open result file.\n");
 		return;
 	}
     fwrite(data, sizeof(double), n * d, h);
     fclose(h);
-//    
-//    
-//    if((h = fopen("result_cost.dat", "w+b")) == NULL) {
-//        printf("Error: could not open result_cost file.\n");
-//        return;
-//    }
-//    
-//    fwrite(costs, sizeof(double), n, h);
-//    fclose(h);
+
     
     printf("Wrote the %i x %i data matrix successfully!\n", n, d);
-    cout << "Results are stored in binary form in file: "+file_path+"result.dat\n\n";
+    cout << "Results are stored in file: "+full_file_name+"\n\n";
     
 }
 
@@ -747,7 +744,7 @@ int main(int argc, char* argv[])
 {
     if(argc == 2){
         if((string(argv[1]).compare("-h")==0) || (string(argv[1]).compare("-help")==0)){ // Give example
-            cout << "To run this executable you must specify 14 parameters:" << endl;
+            cout << "To run this executable you must specify 16 parameters:" << endl;
             cout << "\tn_dims, perp, early_ex, eta, angle, rand_seed, max_iter, max_iter_wo_prog, min_grad, n_iter_lie_p, mom_switch, verbose, n_sample, n_feature\n\n";
             cout << "Example (with default parameters): \n\n\t $./bh_tsne 2 40 4.0 1000 0.5 0 1000 100 1e-7 250 250 1 1000 20 path/to/cpp/\n\n";
             cout << "The paramters are (in order):" << endl;
@@ -757,11 +754,11 @@ int main(int argc, char* argv[])
             cout << "13.\tNumber of samples\n14.\tNumber of features\n15.\tAbsolute path to data file";
             return 0;
         }
-        cout << "Need to use 15 parameters... Read " << argc << " parameters." <<  " Use -h option for help.\n"; assert(false);
+        cout << "Need to use 16 parameters... Read " << argc << " parameters." <<  " Use -h option for help.\n"; assert(false);
     }
     
-    int n_parameters=15; // number of parameters in object tsne_parameters
-    if(argc!=n_parameters+1){cout << "Need to use 15 parameters. Use -h option for help.\n"; assert(false);};
+    int n_parameters=16; // number of parameters in object tsne_parameters
+    if(argc!=n_parameters+1){cout << "Need to use 16 parameters. Use -h option for help.\n"; assert(false);};
     tsne_parameters parameters(argv); // Reading parameters from command line
     if(parameters.verbose){
         parameters.print();
@@ -779,7 +776,7 @@ int main(int argc, char* argv[])
     file_path=parameters.file_path;
 
     // --- Read the parameters and the dataset ---
-	if(tsne->load_data(&data, N, D, file_path)) {
+	if(tsne->load_data(&data, N, D, file_path, parameters.file_suffix)) {
 		// Now fire up the SNE implementation
 		double* Y = (double*) malloc(N * no_dims * sizeof(double));
 		double* costs = (double*) calloc(N, sizeof(double));
@@ -789,7 +786,7 @@ int main(int argc, char* argv[])
         tsne->run(data, N, D, Y, no_dims, file_path, parameters);
 
 		// Save the results
-		tsne->save_data(Y, N, no_dims, file_path);
+		tsne->save_data(Y, N, no_dims, file_path, parameters.file_suffix);
 
         // Clean up the memory
 		free(data); data = NULL;

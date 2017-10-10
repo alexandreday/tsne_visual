@@ -3,11 +3,11 @@ Created on Dec 23, 2016
 
 @author: Alexandre Day
 
-
-Purpose:
+Description
+-------------
     This is a python wrapper/package for performing t-SNE embeddings.
     It defines a tSNE class which mimics the syntax of sklearn package with similar methods 
-    It adds new methods to produce animations of the t-SNE embedding
+    It adds new methods to produce animations of the t-SNE embedding (not currently implemented !)
     and is quite fast since the underlying code is written in C++. 
     See README.md and license for authors of the C++ code. The original 
     bh_tsne C++ code was modified to accomodate more options w.r.t to the gradient descent
@@ -158,14 +158,24 @@ class TSNE:
     """ 
        
         
-    def __init__(self, n_components=2, perplexity=30.0,
-                 early_exaggeration=4.0, learning_rate=100.0, n_iter=1000,
-                 n_iter_without_progress=30, min_grad_norm=1e-7,#metric="euclidean", 
-                 init="random", PCA_n_components=None,verbose=0,
-                 random_state=None, method='barnes_hut', angle=0.5,
-                 animate=False,
-                 n_iter_lying=200,n_iter_momentum_switch=200
-                 ):
+    def __init__(self,
+                n_components=2, 
+                perplexity=30.0,
+                early_exaggeration=4.0,
+                learning_rate=100.0,
+                n_iter=1000,
+                n_iter_without_progress=30,
+                min_grad_norm=1e-7,#metric="euclidean", 
+                init="random",
+                PCA_n_components=None,
+                verbose=0,
+                random_state=None,
+                method='barnes_hut',
+                angle=0.5,
+                animate=False,
+                n_iter_lying=200,
+                n_iter_momentum_switch=200
+                ):
         if not (init in ["pca", "random"]):
             msg = "'init' must be 'pca', 'random'"
             raise ValueError(msg)
@@ -193,11 +203,9 @@ class TSNE:
         self.method = method
         self.angle = angle
         self.embedding_ = None
-        
-        self.file_name="result.dat"
-        
+                
     def fit(self, X):
-        import os
+        import os, subprocess
         """Fit X into the embedded space using the C++ executable
 
         Parameter
@@ -212,7 +220,16 @@ class TSNE:
         
         assert(len(X.shape)==2), "X must be a 2D array"
         
-        ut.data_to_binary(X,delimiter="\t")
+        # -------------------> 
+        fsuffix = ut.generate_unique_fname({
+                    'n_components':self.n_components,
+                    'perplexity':self.perplexity,
+                    'n_iter':self.n_iter,
+                    'angle':self.angle}
+                    )
+                    
+        tmp_binfile = ".tmp_"+fsuffix+".dat"
+        ut.data_to_binary(X, tmp_binfile=tmp_binfile, delimiter="\t")
         
         parameters=[self.n_components,self.perplexity,
                     self.early_exaggeration,self.learning_rate,
@@ -220,14 +237,16 @@ class TSNE:
                     self.n_iter,self.n_iter_without_progress,
                     self.min_grad_norm,self.n_iter_lying,
                     self.n_iter_momentum_switch,self.verbose,
-                    X.shape[0],X.shape[1],os.getcwd()+"/"
-                    ]
+                    X.shape[0],X.shape[1],os.getcwd()+"/",
+                    fsuffix
+        ]
                     
-        ut.run_tsne_command_line(parameters)
+        ut.run_tsne_command_line(parameters, remove = ".tmp_"+fsuffix+".dat") # runs C++ exe and removes input data file.
         
-        self.KLscore_ = np.loadtxt('KL_score.txt', dtype=float, delimiter='\t')
-        self.embedding_ = np.fromfile(self.file_name).reshape(-1,self.n_components)
-
+        self.KLscore_ = np.loadtxt('KL_score_'+fsuffix+'.txt', dtype=float, delimiter='\t')
+        self.embedding_ = np.fromfile('tSNE_'+fsuffix+".txt").reshape(-1, self.n_components)
+        np.savetxt('tSNE_'+fsuffix+".txt", self.embedding_, fmt='%.6f', delimiter='\t') # rewriting file for a readable format !
+        
         return self
         
     def fit_transform(self,X):
