@@ -35,7 +35,7 @@ def run_tsne_command_line(parameters, default_path=".", remove = None):
         time.sleep(0.05)
         os.system("rm "+os.getcwd()+"/"+remove)
         #subprocess.run(["rm "+os.getcwd()+"/"+remove]) # remove this file from directory
-    
+        
 def generate_unique_fname(parameters):
     """Produces a file name indicating the main parameters for the t-SNE simulation
     It also attaches a unique random tag so that you can run t-SNE with the same parameters multiple times (different random seed).
