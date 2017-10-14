@@ -6,9 +6,13 @@ The code is a modified version of bhtsne taken from [Laurens van der Maaten repo
 - Clone or download this repository
 - Open file
 - Compile C++ code and install the package with the following commands:
+# Installing
+I suggest you install the code using ```pip``` from an [Anaconda](https://conda.io/docs/user-guide/tasks/manage-environments.html) Python 3 environment. From that environment:
 ```
+git clone https://github.com/alexandreday/tsne_visual.git
+cd tsne_visual
 g++ cpp/sptree.cpp cpp/tsne.cpp -o tsne_visual/bh_tsne -O2
-pip3 install .
+pip install .
 ```
 That's it, you're good to go ! You can now import ```tsne_visual``` from anywhere. See the following example
 for a quick start.
