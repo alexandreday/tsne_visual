@@ -221,14 +221,14 @@ class TSNE:
         assert(len(X.shape)==2), "X must be a 2D array"
         
         # -------------------> 
-        fsuffix = ut.generate_unique_fname({
+        self.fsuffix = ut.generate_unique_fname({
                     'n_components':self.n_components,
                     'perplexity':self.perplexity,
                     'n_iter':self.n_iter,
                     'angle':self.angle}
                     )
                     
-        tmp_binfile = ".tmp_"+fsuffix+".dat"
+        tmp_binfile = ".tmp_"+self.fsuffix+".dat"
         ut.data_to_binary(X, tmp_binfile=tmp_binfile, delimiter="\t")
         
         parameters=[self.n_components,self.perplexity,
@@ -238,14 +238,14 @@ class TSNE:
                     self.min_grad_norm,self.n_iter_lying,
                     self.n_iter_momentum_switch,self.verbose,
                     X.shape[0],X.shape[1],os.getcwd()+"/",
-                    fsuffix
+                    self.fsuffix
         ]
                     
-        ut.run_tsne_command_line(parameters, remove = ".tmp_"+fsuffix+".dat") # runs C++ exe and removes input data file.
+        ut.run_tsne_command_line(parameters, remove = ".tmp_"+self.fsuffix+".dat") # runs C++ exe and removes input data file.
         
-        self.KLscore_ = np.loadtxt('KL_score_'+fsuffix+'.txt', dtype=float, delimiter='\t')
-        self.embedding_ = np.fromfile('tSNE_'+fsuffix+".txt").reshape(-1, self.n_components)
-        np.savetxt('tSNE_'+fsuffix+".txt", self.embedding_, fmt='%.6f', delimiter='\t') # rewriting file for a readable format !
+        self.KLscore_ = np.loadtxt('KL_score_'+self.fsuffix+'.txt', dtype=float, delimiter='\t')
+        self.embedding_ = np.fromfile('tSNE_'+self.fsuffix+".txt").reshape(-1, self.n_components)
+        np.savetxt('tSNE_'+self.fsuffix+".txt", self.embedding_, fmt='%.6f', delimiter='\t') # rewriting file for a readable format !
         
         return self
         
