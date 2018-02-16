@@ -28,8 +28,9 @@ def run_tsne_command_line(parameters, default_path=".", remove = None):
     dir_source=os.path.dirname(tmp.__file__) # trick to get the path to the executable in the package !
     
     param_str=[str(p) for p in parameters]
-
+    print('-----------> Starting t-SNE <------------')
     subprocess.run([dir_source+'/bh_tsne']+param_str)
+    print('DONE')
     #print(dir_source+'/bh_tsne'+" ".join(param_str))
     if remove is not None:
         time.sleep(0.05)

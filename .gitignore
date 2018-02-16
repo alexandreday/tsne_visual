@@ -1,3 +1,5 @@
+test/
+
 # compliled python code #
 *.pyc
 *.pyf

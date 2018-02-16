@@ -243,6 +243,7 @@ class TSNE:
                     
         ut.run_tsne_command_line(parameters, remove = ".tmp_"+self.fsuffix+".dat") # runs C++ exe and removes input data file.
         
+
         self.KLscore_ = np.loadtxt('KL_score_'+self.fsuffix+'.txt', dtype=float, delimiter='\t')
         self.embedding_ = np.fromfile('tSNE_'+self.fsuffix+".txt").reshape(-1, self.n_components)
         np.savetxt('tSNE_'+self.fsuffix+".txt", self.embedding_, fmt='%.6f', delimiter='\t') # rewriting file for a readable format !
