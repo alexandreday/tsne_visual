@@ -154,6 +154,8 @@ class TSNE:
         Number of iteration that momentum is set to 0.5 (updates are equally averaged)
         After 'n_iter_momentum_switch' iterations, gradient descent updates are more reliable
         and thus we increase momentum to 0.8
+    save : bool (default False)
+        Wether to save tsne data automatically. Will also output the KL divergence.
     
     """ 
        
@@ -174,7 +176,8 @@ class TSNE:
                 angle=0.5,
                 animate=False,
                 n_iter_lying=200,
-                n_iter_momentum_switch=200
+                n_iter_momentum_switch=200,
+                save = False
                 ):
         if not (init in ["pca", "random"]):
             msg = "'init' must be 'pca', 'random'"
@@ -203,6 +206,7 @@ class TSNE:
         self.method = method
         self.angle = angle
         self.embedding_ = None
+        self.save = save
                 
     def fit(self, X):
         import os, subprocess
@@ -243,11 +247,18 @@ class TSNE:
                     
         ut.run_tsne_command_line(parameters, remove = ".tmp_"+self.fsuffix+".dat") # runs C++ exe and removes input data file.
         
+        kl_file = 'KL_score_'+self.fsuffix+'.txt'
+        tsne_file = 'tSNE_'+self.fsuffix+".txt"
 
-        self.KLscore_ = np.loadtxt('KL_score_'+self.fsuffix+'.txt', dtype=float, delimiter='\t')
-        self.embedding_ = np.fromfile('tSNE_'+self.fsuffix+".txt").reshape(-1, self.n_components)
-        np.savetxt('tSNE_'+self.fsuffix+".txt", self.embedding_, fmt='%.6f', delimiter='\t') # rewriting file for a readable format !
-        
+        self.KLscore_ = np.loadtxt(kl_file, dtype=float, delimiter='\t')
+        self.embedding_ = np.fromfile(tsne_file).reshape(-1, self.n_components)
+
+        if self.save is True:
+            np.savetxt(tsne_file, self.embedding_, fmt='%.6f', delimiter='\t') # rewriting file for a readable format !
+        else:
+            os.system('rm %s'%kl_file)
+            os.system('rm %s'%tsne_file) # removing files ... 
+    
         return self
         
     def fit_transform(self,X):
