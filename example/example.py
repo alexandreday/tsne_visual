@@ -1,6 +1,5 @@
 import numpy as np
-from tsne_visual import TSNE
-from read_MNIST import load_mnist
+from tsne_visual import TSNE, dataset
 from sklearn.decomposition import PCA
 from matplotlib import pyplot as plt
 import time
@@ -9,7 +8,7 @@ import time
 print("--> Running t-SNE on MNIST (with n=10000), then plotting the result")
 
 np.random.seed(0) # Always same seed here <--
-x,y=load_mnist(path="MNIST/")
+x,y=dataset.load_mnist()
 
 x=np.array(x[:10000],dtype=np.float)
 z=y[:10000]

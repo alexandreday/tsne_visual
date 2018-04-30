@@ -1,1 +1,2 @@
 include tsne_visual/bh_tsne
+include tsne_visual/MNIST/*
