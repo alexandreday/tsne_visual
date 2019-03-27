@@ -1,19 +1,15 @@
 '''
-Created on Dec 23, 2016
-
 @author: Alexandre Day
 
 Description
 -------------
     This is a python wrapper/package for performing t-SNE embeddings.
-    It defines a tSNE class which mimics the syntax of sklearn package with similar methods 
-    It adds new methods to produce animations of the t-SNE embedding (not currently implemented !)
-    and is quite fast since the underlying code is written in C++. 
-    See README.md and license for authors of the C++ code. The original 
-    bh_tsne C++ code was modified to accomodate more options w.r.t to the gradient descent
-	parameters.
-'''
+    It defines a tSNE class which mimics scikit-learn API. It adds new methods to produce animations of the t-SNE embedding (coming soon!)
+    and fairly fast since the underlying code is written in C++ (note that there exists faster codes out there!)
+    See README.md and license for authors of the C++ code. The original bh_tsne C++ code was modified to accomodate more 
+    options w.r.t to the gradient descent parameters.
 
+'''
 import numpy as np
 from . import utils as ut
 
@@ -175,9 +171,10 @@ class TSNE:
                 method='barnes_hut',
                 angle=0.5,
                 animate=False,
+                animate_kwargs = None
                 n_iter_lying=200,
                 n_iter_momentum_switch=200,
-                save = False
+                save = False,
                 ):
         if not (init in ["pca", "random"]):
             msg = "'init' must be 'pca', 'random'"
@@ -207,6 +204,10 @@ class TSNE:
         self.angle = angle
         self.embedding_ = None
         self.save = save
+
+        # animate parameters 
+        self.animate = animate
+        self.animate_kwargs = animate_kwargs
                 
     def fit(self, X):
         import os, subprocess
@@ -221,8 +222,11 @@ class TSNE:
         None
 
         """
-        
-        assert(len(X.shape)==2), "X must be a 2D array"
+        try:
+            assert(len(X.shape)==2)
+        except:
+            print("Wrong input: X must be a 2D array")
+            exit()
         
         # -------------------> 
         self.fsuffix = ut.generate_unique_fname({

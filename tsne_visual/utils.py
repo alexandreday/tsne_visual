@@ -1,9 +1,3 @@
-'''
-Created on Jan 5, 2017
-
-@author: Alexandre Day
-'''
-
 import numpy as np
 
 def data_to_binary(X, tmp_binfile="data.dat", delimiter=None):
@@ -52,3 +46,6 @@ def generate_unique_fname(parameters):
     fname = "dim=%i_angle=%.2f_perp=%i_nIter=%i"%(parameters['n_components'], parameters['angle'], parameters['perplexity'], parameters['n_iter'])
     unique_tag = uuid.uuid4().hex
     return fname + "_" + unique_tag
+
+def make_movie(movie_args = None):
+    pass
