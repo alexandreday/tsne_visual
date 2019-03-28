@@ -206,10 +206,18 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims, string file_path
                 total_time += (float) (end - start) / CLOCKS_PER_SEC;
                 printf("Iteration %d: error is %f (50 iterations in %4.2f seconds)\n", iter, C, (float) (end - start) / CLOCKS_PER_SEC);
             }
+          
             KLscore.push_back(pair<int,double>(iter,C));
 			start = clock();
         }
     }
+    // SAVE data
+
+    // If required, saves the output of iteration here ...
+    // Just print to disk file, then python script can read and erase it.
+    // Python script keeps tract of process ... and just plots results and saves jpeg.
+    // At the end ... produces a movie.
+
     end = clock(); total_time += (float) (end - start) / CLOCKS_PER_SEC;
 
     // Clean up memory
